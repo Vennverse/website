@@ -68,7 +68,7 @@ function App() {
           <h2>Revolutionary Features</h2>
           <div className="feature-grid">
             <div className="feature">
-              <img src={images[0]} alt="AI-Powered Shopping" />
+              <img src= "./shopingai.webp" alt="AI-Powered Shopping" />
               <h3>AI-Powered Shopping</h3>
               <p>Discover products tailored to your preferences with our advanced AI recommendations</p>
             </div>
