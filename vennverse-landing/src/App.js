@@ -1,8 +1,7 @@
 // App.js
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import logo from './VennSocial Logo-02.png'; // Make sure this image is in your project directory
-
+import logo from './VennSocial Logo-05.png'; 
 function App() {
   const [email, setEmail] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
