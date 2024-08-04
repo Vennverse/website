@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css');
+
 body, html {
   margin: 0;
   padding: 0;
@@ -12,7 +15,7 @@ body, html {
 }
 
 header {
-  background-color: rgba(0, 0, 0, 0.8);
+  background: linear-gradient(135deg, #c1dffd, #ffffff);
   backdrop-filter: blur(10px);
   padding: 10px 20px;
   position: fixed;
@@ -75,7 +78,7 @@ nav {
 .menu-icon div {
   width: 25px;
   height: 3px;
-  background-color: #fff;
+  background-color: #000000;
   margin: 5px 0;
   transition: 0.4s;
 }
@@ -102,14 +105,14 @@ ul {
 
 ul li a {
   text-decoration: none;
-  color: #fff;
+  color: #000000;
   padding: 10px 20px;
   border-radius: 30px;
   transition: background 0.3s, transform 0.3s;
 }
 
 ul li a:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 185, 35, 0.2);
   transform: scale(1.1);
 }
 
@@ -119,7 +122,7 @@ ul li a:hover {
   justify-content: space-between;
   height: 100vh;
   padding: 0 10%;
-  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  background: linear-gradient(135deg, #c1dffd, #ffffff);
   position: relative;
   overflow: hidden;
 }
@@ -129,20 +132,51 @@ ul li a:hover {
   text-align: left;
 }
 
-.hero h1 {
-  font-size: 3rem;
-  line-height: 1.2;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.hero-image-container {
+  width: 60%;
+  height: 60vh; /* Adjust this value to set the desired height */
+  overflow: hidden;
+  border-radius: 20px;
 }
 
-.hero p {
-  font-size: 1.5rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This will make the image cover the container while maintaining aspect ratio */
+  object-position: center; /* This centers the image within the container */
+  transition: opacity 0.5s ease-in-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+.about {
+  background: linear-gradient(135deg, #ffffff, #ffffff);
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.about p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #000000;
+}
 .cta-button {
   padding: 15px 30px;
   font-size: 1.2rem;
@@ -161,6 +195,7 @@ ul li a:hover {
 
 .hero-image {
   max-width: 50%;
+  overflow: hidden;
 }
 
 .hero-image img {
@@ -169,12 +204,13 @@ ul li a:hover {
   transition: opacity 0.5s ease-in-out;
 }
 
-.fade-in {
-  opacity: 0;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.hero-image img.fade-in {
-  opacity: 1;
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 section {
@@ -190,17 +226,15 @@ section h2 {
 }
 
 .feature-grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .feature {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 20px;
-  max-width: 300px;
   transition: transform 0.3s;
 }
 
@@ -244,22 +278,49 @@ section h2 {
 }
 
 .overlay {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ai-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.ai-tool {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 20px;
+  transition: transform 0.3s;
+}
+
+.ai-tool i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.ai-tool h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.ai-tool:hover {
+  transform: scale(1.05);
 }
 
 .metaverse-features {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
 }
 
 .metaverse-feature {
   background: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 20px;
-  max-width: 300px;
   transition: transform 0.3s;
 }
 
@@ -317,4 +378,47 @@ footer p {
   margin: 0;
   font-size: 1rem;
   color: #fff;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    height: auto;
+    padding: 100px 5% 50px;
+  }
+
+  .hero-content, .hero-image {
+    max-width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px 0;
+  }
+
+  nav ul.open {
+    display: flex;
+  }
+
+  .app-links {
+    display: none;
+  }
 }
