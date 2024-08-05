@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import logo from './VennSocial Logo-05.png';
 import heroImage2 from './2.webp';
@@ -8,8 +8,9 @@ import heroImage4 from './4.webp';
 function App() {
   const [email, setEmail] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentHeroImageIndex, setCurrentHeroImageIndex] = useState(0);
+  const [activeFeature, setActiveFeature] = useState(0);
+  const featuresRef = useRef(null);
 
   const images = [
     "https://camo.envatousercontent.com/76a9231bd3dde0310bf0199c5c578fe99d7a543c/68747470733a2f2f646f63756d656e746174696f6e2e636f6465706561726c2e696e2f636f64655f63616e796f6e5f6173736574732f73617968692f342e706e67",
@@ -25,12 +26,53 @@ function App() {
     heroImage4
   ];
 
+  const features = [
+    {
+      image: images[0],
+      title: "AI-Powered Shopping",
+      description: "Discover products tailored to your preferences with our advanced AI recommendations"
+    },
+    {
+      image: images[1],
+      title: "AI Job Matching",
+      description: "Find your dream job with our AI-powered job matching and automatic resume generation"
+    },
+    {
+      image: images[2],
+      title: "Interview AI Bot",
+      description: "Prepare for interviews with our GPT-4 powered AI bot, free for all users"
+    },
+    {
+      image: images[3],
+      title: "Privacy AI",
+      description: "Protect your data with our advanced AI-driven privacy features"
+    }
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
       setCurrentHeroImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
     }, 5000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (featuresRef.current) {
+        const featuresTop = featuresRef.current.offsetTop;
+        const featuresBottom = featuresTop + featuresRef.current.offsetHeight;
+        const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+        if (scrollPosition >= featuresTop && scrollPosition <= featuresBottom) {
+          const featureHeight = featuresRef.current.offsetHeight / features.length;
+          const activeIndex = Math.floor((scrollPosition - featuresTop) / featureHeight);
+          setActiveFeature(Math.min(activeIndex, features.length - 1));
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleSubmit = (e) => {
@@ -65,50 +107,41 @@ function App() {
       </header>
 
       <main>
-      
-    
-      <section className="hero">
-  <div className="hero-content">
-    <h1>Elevate Your Social and Professional Network with Vennverse</h1>
-    <p>Immerse yourself in a cutting-edge AI-powered social and professional network that seamlessly blends reality with the metaverse.</p>
-    <button className="cta-button">Join the Future Now</button>
-    </div>
-   <div className="hero-image-container">
-    <img 
-      src={heroImages[currentHeroImageIndex]} 
-      alt="Vennverse Features" 
-      className="hero-image fade-in"
-    />
-      </div>
-     </section>
-     <section className="about">
+        <section className="hero">
+          <div className="hero-content">
+            <h1>Elevate Your Social and Professional Network with Vennverse</h1>
+            <p>Immerse yourself in a cutting-edge AI-powered social and professional network that seamlessly blends reality with the metaverse.</p>
+            <button className="cta-button">Join the Future Now</button>
+          </div>
+          <div className="hero-image-container">
+            <img 
+              src={heroImages[currentHeroImageIndex]} 
+              alt="Vennverse Features" 
+              className="hero-image fade-in"
+            />
+          </div>
+        </section>
+
+        <section className="about">
           <div className="about-content">
             <h2>About Vennverse</h2>
             <p>Vennverse is a revolutionary AI-powered platform that seamlessly integrates social connections and professional networking. Connecting you to a world of opportunities, Vennverse bridges the gap between reality and the metaverse, offering both career opportunities and social fun.</p>
           </div>
         </section>
-        <section id="features">
+
+        <section id="features" ref={featuresRef}>
           <h2>Revolutionary Features</h2>
-          <div className="feature-grid">
-            <div className="feature">
-              <img src={images[0]} alt="AI-Powered Shopping" />
-              <h3>AI-Powered Shopping</h3>
-              <p>Discover products tailored to your preferences with our advanced AI recommendations</p>
+          <div className="feature-container">
+            <div className="feature-image">
+              <img src={features[activeFeature].image} alt={features[activeFeature].title} />
             </div>
-            <div className="feature">
-              <img src={images[1]} alt="AI Job Matching" />
-              <h3>AI Job Matching</h3>
-              <p>Find your dream job with our AI-powered job matching and automatic resume generation</p>
-            </div>
-            <div className="feature">
-              <img src={images[2]} alt="Interview AI Bot" />
-              <h3>Interview AI Bot</h3>
-              <p>Prepare for interviews with our GPT-4 powered AI bot, free for all users</p>
-            </div>
-            <div className="feature">
-              <img src={images[3]} alt="Privacy AI" />
-              <h3>Privacy AI</h3>
-              <p>Protect your data with our advanced AI-driven privacy features</p>
+            <div className="feature-list">
+              {features.map((feature, index) => (
+                <div key={index} className={`feature ${index === activeFeature ? 'active' : ''}`}>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
